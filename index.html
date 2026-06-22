@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Анкета клиента</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8e8ee 0%, #fce4ec 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 32px rgba(200, 100, 130, 0.12);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo h1 {
+      font-size: 22px;
+      color: #c2185b;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .logo p {
+      color: #999;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #f0d6e0;
+      border-radius: 12px;
+      font-size: 15px;
+      color: #333;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fdfafa;
+    }
+
+    input:focus {
+      border-color: #e91e63;
+      background: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #e91e63, #c2185b);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    button:hover { opacity: 0.92; }
+    button:active { transform: scale(0.98); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success .icon { font-size: 56px; margin-bottom: 12px; }
+    .success h2 { color: #c2185b; font-size: 20px; margin-bottom: 8px; }
+    .success p { color: #999; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <h1>💅 Carbonado</h1>
+      <p>Заполните анкету — это займёт 1 минуту</p>
+    </div>
+
+    <form id="form">
+      <div class="field">
+        <label>Имя</label>
+        <input type="text" name="first_name" placeholder="Мунира" required />
+      </div>
+      <div class="field">
+        <label>Фамилия</label>
+        <input type="text" name="last_name" placeholder="Иванова" required />
+      </div>
+      <div class="field">
+        <label>Номер телефона</label>
+        <input type="tel" name="phone" placeholder="+998 90 123 45 67" required />
+      </div>
+      <div class="field">
+        <label>Имя мастера</label>
+        <input type="text" name="master" placeholder="Алина" required />
+      </div>
+      <div class="field">
+        <label>Сумма оплаты</label>
+        <input type="text" name="amount" placeholder="150 000" required />
+      </div>
+      <button type="submit" id="btn">Отправить анкету</button>
+    </form>
+
+    <div class="success" id="success">
+      <div class="icon">🌸</div>
+      <h2>Спасибо!</h2>
+      <p>Ваша анкета отправлена.<br />Рады видеть вас снова!</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      btn.disabled = true;
+      btn.textContent = 'Отправляем...';
+
+      const data = Object.fromEntries(new FormData(e.target));
+
+      try {
+        await fetch('/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Отправить анкету';
+        alert('Ошибка. Попробуйте ещё раз.');
+      }
+    });
+  </script>
+</body>
+</html>
