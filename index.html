@@ -26,6 +26,32 @@
       box-shadow: 0 8px 32px rgba(200, 100, 130, 0.12);
     }
 
+    /* Переключатель языка */
+    .lang-switcher {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .lang-btn {
+      padding: 6px 14px;
+      border: 1.5px solid #f0d6e0;
+      border-radius: 20px;
+      background: #fdfafa;
+      color: #aaa;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      border-color: #e91e63;
+      background: #fce4ec;
+      color: #c2185b;
+    }
+
     .logo {
       text-align: center;
       margin-bottom: 28px;
@@ -53,9 +79,7 @@
       margin: 24px 0 12px;
     }
 
-    .field {
-      margin-bottom: 18px;
-    }
+    .field { margin-bottom: 18px; }
 
     label {
       display: block;
@@ -83,21 +107,17 @@
       background: white;
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
+    textarea { resize: vertical; min-height: 80px; }
 
-    /* Звёздочки */
     .stars {
       display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
       gap: 8px;
       margin-top: 4px;
     }
 
-    .stars input {
-      display: none;
-    }
+    .stars input { display: none; }
 
     .stars label {
       font-size: 32px;
@@ -109,32 +129,14 @@
       width: auto;
     }
 
-    .stars input:checked ~ label,
-    .stars label:hover,
-    .stars label:hover ~ label {
-      color: #f5a623;
-    }
-
-    .stars {
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-    }
-
     .stars label:hover,
     .stars label:hover ~ label,
     .stars input:checked ~ label {
       color: #f5a623;
     }
 
-    /* Да/Нет кнопки */
-    .toggle-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    .toggle-group input {
-      display: none;
-    }
+    .toggle-group { display: flex; gap: 10px; }
+    .toggle-group input { display: none; }
 
     .toggle-group label {
       flex: 1;
@@ -185,94 +187,93 @@
     .success h2 { color: #c2185b; font-size: 20px; margin-bottom: 8px; }
     .success p { color: #999; font-size: 14px; }
 
-    .divider {
-      height: 1px;
-      background: #f0d6e0;
-      margin: 8px 0;
-    }
+    .divider { height: 1px; background: #f0d6e0; margin: 8px 0; }
   </style>
 </head>
 <body>
   <div class="card">
+
+    <!-- Переключатель языка -->
+    <div class="lang-switcher">
+      <button type="button" class="lang-btn" onclick="setLang('uz')">🇺🇿 UZ</button>
+      <button type="button" class="lang-btn active" onclick="setLang('ru')">🇷🇺 RU</button>
+      <button type="button" class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+    </div>
+
     <div class="logo">
       <h1>💅 Carbonado</h1>
-      <p>Заполните анкету — это займёт 2 минуты</p>
+      <p class="t" data-key="subtitle"></p>
     </div>
 
     <form id="form">
 
-      <!-- Основная информация -->
-      <div class="section-title">Основная информация</div>
+      <div class="section-title t" data-key="section1"></div>
 
       <div class="field">
-        <label>Имя</label>
-        <input type="text" name="first_name" placeholder="Мунира" required />
+        <label class="t" data-key="first_name"></label>
+        <input type="text" name="first_name" class="t-ph" data-key="ph_first_name" required />
       </div>
       <div class="field">
-        <label>Фамилия</label>
-        <input type="text" name="last_name" placeholder="Иванова" required />
+        <label class="t" data-key="last_name"></label>
+        <input type="text" name="last_name" class="t-ph" data-key="ph_last_name" required />
       </div>
       <div class="field">
-        <label>Номер телефона</label>
+        <label class="t" data-key="phone"></label>
         <input type="tel" name="phone" placeholder="+998 90 123 45 67" required />
       </div>
       <div class="field">
-        <label>Имя мастера</label>
-        <input type="text" name="master" placeholder="Алина" required />
+        <label class="t" data-key="master"></label>
+        <input type="text" name="master" class="t-ph" data-key="ph_master" required />
       </div>
       <div class="field">
-        <label>Сумма оплаты</label>
-        <input type="text" name="amount" placeholder="150 000" required />
+        <label class="t" data-key="amount"></label>
+        <input type="text" name="amount" class="t-ph" data-key="ph_amount" required />
       </div>
 
       <div class="divider"></div>
-
-      <!-- Полезно для бизнеса -->
-      <div class="section-title">О вашем визите</div>
+      <div class="section-title t" data-key="section2"></div>
 
       <div class="field">
-        <label>Какую услугу получили?</label>
+        <label class="t" data-key="service"></label>
         <select name="service" required>
-          <option value="" disabled selected>Выберите услугу</option>
-          <option>Маникюр</option>
-          <option>Педикюр</option>
-          <option>Наращивание ногтей</option>
-          <option>Покрытие гель-лаком</option>
-          <option>Маникюр + Педикюр</option>
-          <option>Другое</option>
+          <option value="" disabled selected class="t" data-key="select_service"></option>
+          <option class="t" data-key="svc1"></option>
+          <option class="t" data-key="svc2"></option>
+          <option class="t" data-key="svc3"></option>
+          <option class="t" data-key="svc4"></option>
+          <option class="t" data-key="svc5"></option>
+          <option class="t" data-key="svc6"></option>
         </select>
       </div>
 
       <div class="field">
-        <label>Это ваш первый визит?</label>
+        <label class="t" data-key="visit_type"></label>
         <div class="toggle-group">
-          <input type="radio" name="visit_type" id="first" value="Первый визит" required />
-          <label for="first">Первый раз</label>
-          <input type="radio" name="visit_type" id="repeat" value="Повторный визит" />
-          <label for="repeat">Повторный</label>
+          <input type="radio" name="visit_type" id="first" value="" required />
+          <label for="first" class="t" data-key="first_visit"></label>
+          <input type="radio" name="visit_type" id="repeat" value="" />
+          <label for="repeat" class="t" data-key="repeat_visit"></label>
         </div>
       </div>
 
       <div class="field">
-        <label>Откуда узнали о нас?</label>
+        <label class="t" data-key="source"></label>
         <select name="source" required>
-          <option value="" disabled selected>Выберите вариант</option>
-          <option>Instagram</option>
-          <option>Подруга / знакомые</option>
-          <option>Google Карты</option>
-          <option>Telegram</option>
-          <option>Проходил(а) мимо</option>
-          <option>Другое</option>
+          <option value="" disabled selected class="t" data-key="select_source"></option>
+          <option class="t" data-key="src1"></option>
+          <option class="t" data-key="src2"></option>
+          <option class="t" data-key="src3"></option>
+          <option class="t" data-key="src4"></option>
+          <option class="t" data-key="src5"></option>
+          <option class="t" data-key="src6"></option>
         </select>
       </div>
 
       <div class="divider"></div>
-
-      <!-- Обратная связь -->
-      <div class="section-title">Обратная связь</div>
+      <div class="section-title t" data-key="section3"></div>
 
       <div class="field">
-        <label>Ваша оценка</label>
+        <label class="t" data-key="rating"></label>
         <div class="stars">
           <input type="radio" name="rating" id="s5" value="5" required />
           <label for="s5">★</label>
@@ -288,38 +289,204 @@
       </div>
 
       <div class="field">
-        <label>Всё ли понравилось?</label>
+        <label class="t" data-key="satisfied"></label>
         <div class="toggle-group">
-          <input type="radio" name="satisfied" id="yes" value="Да" required />
-          <label for="yes">👍 Да</label>
-          <input type="radio" name="satisfied" id="no" value="Нет" />
-          <label for="no">👎 Нет</label>
+          <input type="radio" name="satisfied" id="yes" value="" required />
+          <label for="yes" class="t" data-key="yes"></label>
+          <input type="radio" name="satisfied" id="no" value="" />
+          <label for="no" class="t" data-key="no"></label>
         </div>
       </div>
 
       <div class="field">
-        <label>Пожелания или комментарий</label>
-        <textarea name="comment" placeholder="Напишите если есть пожелания..."></textarea>
+        <label class="t" data-key="comment"></label>
+        <textarea name="comment" class="t-ph" data-key="ph_comment"></textarea>
       </div>
 
-      <button type="submit" id="btn">Отправить анкету</button>
+      <button type="submit" id="btn" class="t" data-key="submit"></button>
     </form>
 
     <div class="success" id="success">
       <div class="icon">🌸</div>
-      <h2>Спасибо!</h2>
-      <p>Ваша анкета отправлена.<br />Рады видеть вас снова!</p>
+      <h2 class="t" data-key="success_title"></h2>
+      <p class="t" data-key="success_text"></p>
     </div>
   </div>
 
   <script>
+    const translations = {
+      uz: {
+        subtitle: "Anketani to'ldiring — 2 daqiqa vaqt oladi",
+        section1: "Asosiy ma'lumotlar",
+        first_name: "Ism",
+        ph_first_name: "Munira",
+        last_name: "Familiya",
+        ph_last_name: "Ivanova",
+        phone: "Telefon raqam",
+        master: "Usta ismi",
+        ph_master: "Alina",
+        amount: "To'lov summasi",
+        ph_amount: "150 000",
+        section2: "Tashrif haqida",
+        service: "Qanday xizmat oldingiz?",
+        select_service: "Xizmatni tanlang",
+        svc1: "Manikur",
+        svc2: "Pedikur",
+        svc3: "Tirnoq o'stirish",
+        svc4: "Gel-lak qoplash",
+        svc5: "Manikur + Pedikur",
+        svc6: "Boshqa",
+        visit_type: "Bu sizning birinchi tashrifingizmi?",
+        first_visit: "Birinchi marta",
+        repeat_visit: "Qayta tashrif",
+        source: "Biz haqimizda qayerdan bildingiz?",
+        select_source: "Variantni tanlang",
+        src1: "Instagram",
+        src2: "Do'st / tanishlar",
+        src3: "Google Maps",
+        src4: "Telegram",
+        src5: "Yaqindan o'tib",
+        src6: "Boshqa",
+        section3: "Fikr-mulohaza",
+        rating: "Bahoyingiz",
+        satisfied: "Hamma narsa yoqdimi?",
+        yes: "👍 Ha",
+        no: "👎 Yo'q",
+        comment: "Istak yoki izoh",
+        ph_comment: "Istaklar bo'lsa yozing...",
+        submit: "Anketani yuborish",
+        success_title: "Rahmat!",
+        success_text: "Anketangiz yuborildi.\nSizni yana ko'rishdan xursandmiz!",
+      },
+      ru: {
+        subtitle: "Заполните анкету — это займёт 2 минуты",
+        section1: "Основная информация",
+        first_name: "Имя",
+        ph_first_name: "Мунира",
+        last_name: "Фамилия",
+        ph_last_name: "Иванова",
+        phone: "Номер телефона",
+        master: "Имя мастера",
+        ph_master: "Алина",
+        amount: "Сумма оплаты",
+        ph_amount: "150 000",
+        section2: "О вашем визите",
+        service: "Какую услугу получили?",
+        select_service: "Выберите услугу",
+        svc1: "Маникюр",
+        svc2: "Педикюр",
+        svc3: "Наращивание ногтей",
+        svc4: "Покрытие гель-лаком",
+        svc5: "Маникюр + Педикюр",
+        svc6: "Другое",
+        visit_type: "Это ваш первый визит?",
+        first_visit: "Первый раз",
+        repeat_visit: "Повторный",
+        source: "Откуда узнали о нас?",
+        select_source: "Выберите вариант",
+        src1: "Instagram",
+        src2: "Подруга / знакомые",
+        src3: "Google Карты",
+        src4: "Telegram",
+        src5: "Проходил(а) мимо",
+        src6: "Другое",
+        section3: "Обратная связь",
+        rating: "Ваша оценка",
+        satisfied: "Всё ли понравилось?",
+        yes: "👍 Да",
+        no: "👎 Нет",
+        comment: "Пожелания или комментарий",
+        ph_comment: "Напишите если есть пожелания...",
+        submit: "Отправить анкету",
+        success_title: "Спасибо!",
+        success_text: "Ваша анкета отправлена.\nРады видеть вас снова!",
+      },
+      en: {
+        subtitle: "Fill out the form — it takes 2 minutes",
+        section1: "Basic information",
+        first_name: "First name",
+        ph_first_name: "Munira",
+        last_name: "Last name",
+        ph_last_name: "Ivanova",
+        phone: "Phone number",
+        master: "Master's name",
+        ph_master: "Alina",
+        amount: "Payment amount",
+        ph_amount: "150 000",
+        section2: "About your visit",
+        service: "What service did you receive?",
+        select_service: "Choose a service",
+        svc1: "Manicure",
+        svc2: "Pedicure",
+        svc3: "Nail extensions",
+        svc4: "Gel polish",
+        svc5: "Manicure + Pedicure",
+        svc6: "Other",
+        visit_type: "Is this your first visit?",
+        first_visit: "First time",
+        repeat_visit: "Returning",
+        source: "How did you find us?",
+        select_source: "Choose an option",
+        src1: "Instagram",
+        src2: "Friend / acquaintance",
+        src3: "Google Maps",
+        src4: "Telegram",
+        src5: "Walked by",
+        src6: "Other",
+        section3: "Feedback",
+        rating: "Your rating",
+        satisfied: "Did you enjoy everything?",
+        yes: "👍 Yes",
+        no: "👎 No",
+        comment: "Suggestions or comment",
+        ph_comment: "Write if you have any suggestions...",
+        submit: "Submit form",
+        success_title: "Thank you!",
+        success_text: "Your form has been submitted.\nWe look forward to seeing you again!",
+      }
+    };
+
+    let currentLang = 'ru';
+
+    function setLang(lang) {
+      currentLang = lang;
+
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const t = translations[lang];
+
+      document.querySelectorAll('.t').forEach(el => {
+        const key = el.dataset.key;
+        if (t[key]) el.textContent = t[key];
+      });
+
+      document.querySelectorAll('.t-ph').forEach(el => {
+        const key = el.dataset.key;
+        if (t[key]) el.placeholder = t[key];
+      });
+
+      // Обновляем value у radio кнопок
+      document.getElementById('first').value = t.first_visit;
+      document.getElementById('repeat').value = t.repeat_visit;
+      document.getElementById('yes').value = t.yes.replace('👍 ', '');
+      document.getElementById('no').value = t.no.replace('👎 ', '');
+    }
+
+    // Инициализация на русском
+    setLang('ru');
+    document.querySelectorAll('.lang-btn')[1].classList.add('active');
+
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn');
       btn.disabled = true;
-      btn.textContent = 'Отправляем...';
+
+      const t = translations[currentLang];
+      btn.textContent = currentLang === 'uz' ? 'Yuborilmoqda...' : currentLang === 'en' ? 'Sending...' : 'Отправляем...';
 
       const data = Object.fromEntries(new FormData(e.target));
+      data.lang = currentLang.toUpperCase();
 
       try {
         await fetch('/submit', {
@@ -331,8 +498,8 @@
         document.getElementById('success').style.display = 'block';
       } catch {
         btn.disabled = false;
-        btn.textContent = 'Отправить анкету';
-        alert('Ошибка. Попробуйте ещё раз.');
+        btn.textContent = t.submit;
+        alert(currentLang === 'uz' ? 'Xatolik. Qayta urinib ko\'ring.' : currentLang === 'en' ? 'Error. Please try again.' : 'Ошибка. Попробуйте ещё раз.');
       }
     });
   </script>

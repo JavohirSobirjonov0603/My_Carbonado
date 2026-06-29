@@ -31,6 +31,7 @@ class VisitForm(BaseModel):
     rating: str
     satisfied: str
     comment: Optional[str] = ""
+    lang: Optional[str] = "RU"
 
 
 @app.get("/")
@@ -44,7 +45,7 @@ async def submit_form(form: VisitForm):
     comment_line = f"\n💬 Комментарий: {form.comment}" if form.comment else ""
 
     text = (
-        f"📋 *Новый визит*\n"
+        f"📋 *Новый визит* [{form.lang}]\n"
         f"━━━━━━━━━━━━━━━\n"
         f"👤 {form.first_name} {form.last_name}\n"
         f"📞 {form.phone}\n"
