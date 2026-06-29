@@ -31,6 +31,8 @@ class VisitForm(BaseModel):
     rating: str
     satisfied: str
     comment: Optional[str] = ""
+    fav_master: Optional[str] = ""
+    likes: Optional[str] = ""
     lang: Optional[str] = "RU"
 
 
@@ -43,6 +45,8 @@ def serve_form():
 async def submit_form(form: VisitForm):
     stars = "⭐" * int(form.rating)
     comment_line = f"\n💬 Комментарий: {form.comment}" if form.comment else ""
+    fav_master_line = f"\n👑 Любимый мастер: {form.fav_master}" if form.fav_master else ""
+    likes_line = f"\n❤️ Нравится: {form.likes}" if form.likes else ""
 
     text = (
         f"📋 *Новый визит* [{form.lang}]\n"
@@ -54,10 +58,12 @@ async def submit_form(form: VisitForm):
         f"━━━━━━━━━━━━━━━\n"
         f"💅 Услуга: {form.service}\n"
         f"🔄 Визит: {form.visit_type}\n"
-        f"📣 Источник: {form.source}\n"
+        f"📣 Источник: {form.source}"
+        f"{fav_master_line}\n"
         f"━━━━━━━━━━━━━━━\n"
         f"{stars} Оценка: {form.rating}/5\n"
         f"😊 Доволен(а): {form.satisfied}"
+        f"{likes_line}"
         f"{comment_line}"
     )
 
