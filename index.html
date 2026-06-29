@@ -3,190 +3,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Анкета клиента</title>
+  <title>Carbonado — Anketa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #E8D5A3;
+      --gold-dark: #A07840;
+      --dark: #0D0D0D;
+      --dark-2: #161616;
+      --dark-3: #1E1E1E;
+      --dark-4: #2A2A2A;
+      --text: #F0EAE0;
+      --text-muted: #8A8078;
+      --text-dim: #5A5248;
+      --border: rgba(201, 169, 110, 0.2);
+      --border-hover: rgba(201, 169, 110, 0.5);
+    }
+
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #f8e8ee 0%, #fce4ec 100%);
+      background: var(--dark);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.03) 0%, transparent 50%);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      padding: 40px 20px 80px;
+      color: var(--text);
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* Шапка */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .header::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+      margin: 0 auto 24px;
+    }
+
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: 8px;
+      color: var(--gold);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 8px;
+      font-weight: 300;
+    }
+
+    .header-line {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
+      gap: 12px;
+      margin: 24px 0 16px;
     }
 
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 36px 32px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 8px 32px rgba(200, 100, 130, 0.12);
+    .header-line::before,
+    .header-line::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dark));
     }
 
+    .header-line::after {
+      background: linear-gradient(to left, transparent, var(--gold-dark));
+    }
+
+    .header-line span {
+      font-size: 16px;
+      color: var(--gold);
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* Переключатель языка */
     .lang-switcher {
       display: flex;
-      gap: 8px;
+      gap: 0;
       justify-content: center;
-      margin-bottom: 24px;
+      margin-bottom: 40px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .lang-btn {
-      padding: 6px 14px;
-      border: 1.5px solid #f0d6e0;
-      border-radius: 20px;
-      background: #fdfafa;
-      color: #aaa;
-      font-size: 13px;
-      font-weight: 600;
+      padding: 8px 20px;
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.2s;
+      border: none;
+      border-right: 1px solid var(--border);
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
     }
+
+    .lang-btn:last-child { border-right: none; }
 
     .lang-btn.active {
-      border-color: #e91e63;
-      background: #fce4ec;
-      color: #c2185b;
+      background: var(--gold);
+      color: var(--dark);
     }
 
-    .logo {
-      text-align: center;
-      margin-bottom: 28px;
+    .lang-btn:not(.active):hover {
+      color: var(--gold);
+      background: rgba(201,169,110,0.05);
     }
 
-    .logo h1 {
-      font-size: 22px;
-      color: #c2185b;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+    /* Карточка формы */
+    .card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
     }
 
-    .logo p {
-      color: #999;
-      font-size: 13px;
-      margin-top: 4px;
+    .card-inner {
+      padding: 40px 36px;
+    }
+
+    /* Секции */
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.4;
     }
 
     .section-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #e91e63;
+      font-size: 10px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 24px 0 12px;
-    }
-
-    .field { margin-bottom: 18px; }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 6px;
+      color: var(--gold);
       font-weight: 500;
     }
 
-    input, select, textarea {
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Поля */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid #f0d6e0;
-      border-radius: 12px;
+      padding: 14px 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
       font-size: 15px;
-      color: #333;
+      color: var(--text);
       outline: none;
-      transition: border-color 0.2s;
-      background: #fdfafa;
-      font-family: inherit;
+      transition: border-color 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
     }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: #e91e63;
-      background: white;
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--text-dim);
     }
 
-    textarea { resize: vertical; min-height: 80px; }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-bottom-color: var(--gold);
+    }
+
+    .field select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C9A96E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 4px center;
+    }
+
+    .field select option {
+      background: var(--dark-3);
+      color: var(--text);
+    }
+
+    .field textarea {
+      resize: none;
+      min-height: 80px;
+      padding-top: 12px;
+    }
+
+    /* Переключатель да/нет → теперь toggle для первый/повторный */
+    .toggle-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .toggle-row input { display: none; }
+
+    .toggle-row label {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: all 0.3s;
+      border-right: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .toggle-row label:last-child { border-right: none; }
+
+    .toggle-row input:checked + label {
+      background: rgba(201,169,110,0.1);
+      color: var(--gold);
+    }
+
+    /* Звёзды */
+    .stars-wrap { margin-top: 4px; }
 
     .stars {
       display: flex;
       flex-direction: row-reverse;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 4px;
+      justify-content: flex-start;
+      gap: 6px;
     }
 
     .stars input { display: none; }
 
     .stars label {
-      font-size: 32px;
-      color: #ddd;
+      font-size: 28px;
+      color: var(--dark-4);
       cursor: pointer;
-      transition: color 0.15s;
+      transition: color 0.2s, transform 0.15s;
       margin: 0;
       padding: 0;
       width: auto;
+      letter-spacing: 0;
+      text-transform: none;
     }
 
     .stars label:hover,
     .stars label:hover ~ label,
     .stars input:checked ~ label {
-      color: #f5a623;
+      color: var(--gold);
     }
 
-    .toggle-group { display: flex; gap: 10px; }
-    .toggle-group input { display: none; }
-
-    .toggle-group label {
-      flex: 1;
-      text-align: center;
-      padding: 10px;
-      border: 1.5px solid #f0d6e0;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 15px;
-      color: #888;
-      background: #fdfafa;
-      transition: all 0.2s;
-      margin: 0;
-    }
-
-    .toggle-group input:checked + label {
-      border-color: #e91e63;
-      background: #fce4ec;
-      color: #c2185b;
-      font-weight: 600;
-    }
+    .stars label:hover { transform: scale(1.15); }
 
     /* Чекбоксы */
     .checkbox-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0;
+      border: 1px solid var(--border);
     }
 
     .checkbox-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border: 1.5px solid #f0d6e0;
-      border-radius: 12px;
+      gap: 14px;
+      padding: 13px 16px;
       cursor: pointer;
-      transition: all 0.2s;
-      background: #fdfafa;
+      transition: background 0.2s;
+      border-bottom: 1px solid var(--border);
     }
 
-    .checkbox-item:hover {
-      border-color: #e91e63;
-      background: #fff5f8;
-    }
+    .checkbox-item:last-child { border-bottom: none; }
+    .checkbox-item:hover { background: rgba(201,169,110,0.04); }
 
     .checkbox-item input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      accent-color: #e91e63;
+      width: 14px;
+      height: 14px;
+      min-width: 14px;
+      accent-color: var(--gold);
       cursor: pointer;
       padding: 0;
       border: none;
@@ -194,240 +357,330 @@
     }
 
     .checkbox-item span {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.3;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.4;
     }
 
     .checkbox-item:has(input:checked) {
-      border-color: #e91e63;
-      background: #fce4ec;
+      background: rgba(201,169,110,0.06);
     }
 
     .checkbox-item:has(input:checked) span {
-      color: #c2185b;
-      font-weight: 500;
+      color: var(--gold-light);
     }
 
-    button {
+    /* Кнопка */
+    .submit-wrap {
+      padding: 32px 36px 36px;
+      border-top: 1px solid var(--border);
+    }
+
+    button[type="submit"] {
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #e91e63, #c2185b);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 600;
+      padding: 16px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
       cursor: pointer;
-      margin-top: 16px;
-      transition: opacity 0.2s, transform 0.1s;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
     }
 
-    button:hover { opacity: 0.92; }
-    button:active { transform: scale(0.98); }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    button[type="submit"]::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      z-index: 0;
+    }
 
+    button[type="submit"] span {
+      position: relative;
+      z-index: 1;
+      transition: color 0.4s;
+    }
+
+    button[type="submit"]:hover::before { transform: translateX(0); }
+    button[type="submit"]:hover span { color: var(--dark); }
+    button[type="submit"]:disabled { opacity: 0.4; cursor: not-allowed; }
+    button[type="submit"]:disabled::before { display: none; }
+
+    /* Успех */
     .success {
       display: none;
       text-align: center;
-      padding: 20px 0;
+      padding: 64px 36px;
     }
 
-    .success .icon { font-size: 56px; margin-bottom: 12px; }
-    .success h2 { color: #c2185b; font-size: 20px; margin-bottom: 8px; }
-    .success p { color: #999; font-size: 14px; }
+    .success-icon {
+      font-size: 48px;
+      margin-bottom: 24px;
+      display: block;
+    }
 
-    .divider { height: 1px; background: #f0d6e0; margin: 8px 0; }
+    .success h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .success p {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    /* Футер */
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .footer::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to top, transparent, var(--gold-dark));
+      margin: 16px auto 0;
+    }
+
+    .footer p {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Разделитель секций */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0 32px;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="wrap">
+
+    <div class="header">
+      <div class="brand">Carbonado</div>
+      <div class="brand-sub">Beauty Studio</div>
+      <div class="header-line"><span>◆</span></div>
+      <div class="subtitle t" data-key="subtitle"></div>
+    </div>
 
     <div class="lang-switcher">
-      <button type="button" class="lang-btn" onclick="setLang('uz', this)">🇺🇿 UZ</button>
-      <button type="button" class="lang-btn active" onclick="setLang('ru', this)">🇷🇺 RU</button>
-      <button type="button" class="lang-btn" onclick="setLang('en', this)">🇬🇧 EN</button>
+      <button type="button" class="lang-btn" onclick="setLang('uz', this)">UZ</button>
+      <button type="button" class="lang-btn active" onclick="setLang('ru', this)">RU</button>
+      <button type="button" class="lang-btn" onclick="setLang('en', this)">EN</button>
     </div>
 
-    <div class="logo">
-      <h1>💅 Carbonado</h1>
-      <p class="t" data-key="subtitle"></p>
+    <div class="card">
+      <form id="form">
+        <div class="card-inner">
+
+          <!-- СЕКЦИЯ 1 -->
+          <div class="section">
+            <div class="section-header">
+              <div class="section-num">01</div>
+              <div class="section-title t" data-key="section1"></div>
+              <div class="section-line"></div>
+            </div>
+
+            <div class="field">
+              <label class="t" data-key="first_name"></label>
+              <input type="text" name="first_name" class="t-ph" data-key="ph_first_name" required />
+            </div>
+            <div class="field">
+              <label class="t" data-key="last_name"></label>
+              <input type="text" name="last_name" class="t-ph" data-key="ph_last_name" required />
+            </div>
+            <div class="field">
+              <label class="t" data-key="phone"></label>
+              <input type="tel" name="phone" placeholder="+998 90 000 00 00" required />
+            </div>
+            <div class="field">
+              <label class="t" data-key="visit_type"></label>
+              <div class="toggle-row">
+                <input type="radio" name="visit_type" id="first" value="" required />
+                <label for="first" class="t" data-key="first_visit"></label>
+                <input type="radio" name="visit_type" id="repeat" value="" />
+                <label for="repeat" class="t" data-key="repeat_visit"></label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="t" data-key="source"></label>
+              <select name="source" required>
+                <option value="" disabled selected>—</option>
+                <option class="t" data-key="src1"></option>
+                <option class="t" data-key="src2"></option>
+                <option class="t" data-key="src3"></option>
+                <option class="t" data-key="src4"></option>
+                <option class="t" data-key="src5"></option>
+                <option class="t" data-key="src6"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <!-- СЕКЦИЯ 2 -->
+          <div class="section">
+            <div class="section-header">
+              <div class="section-num">02</div>
+              <div class="section-title t" data-key="section2"></div>
+              <div class="section-line"></div>
+            </div>
+
+            <div class="field">
+              <label class="t" data-key="service"></label>
+              <select name="service" required>
+                <option value="" disabled selected>—</option>
+                <option class="t" data-key="svc1"></option>
+                <option class="t" data-key="svc2"></option>
+                <option class="t" data-key="svc3"></option>
+                <option class="t" data-key="svc4"></option>
+                <option class="t" data-key="svc5"></option>
+                <option class="t" data-key="svc6"></option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="t" data-key="master"></label>
+              <input type="text" name="master" class="t-ph" data-key="ph_master" required />
+            </div>
+            <div class="field">
+              <label class="t" data-key="fav_master"></label>
+              <input type="text" name="fav_master" class="t-ph" data-key="ph_fav_master" />
+            </div>
+            <div class="field">
+              <label class="t" data-key="amount"></label>
+              <input type="text" name="amount" class="t-ph" data-key="ph_amount" required />
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <!-- СЕКЦИЯ 3 -->
+          <div class="section" style="margin-bottom:0">
+            <div class="section-header">
+              <div class="section-num">03</div>
+              <div class="section-title t" data-key="section3"></div>
+              <div class="section-line"></div>
+            </div>
+
+            <div class="field">
+              <label class="t" data-key="rating"></label>
+              <div class="stars-wrap">
+                <div class="stars">
+                  <input type="radio" name="rating" id="s5" value="5" required />
+                  <label for="s5">★</label>
+                  <input type="radio" name="rating" id="s4" value="4" />
+                  <label for="s4">★</label>
+                  <input type="radio" name="rating" id="s3" value="3" />
+                  <label for="s3">★</label>
+                  <input type="radio" name="rating" id="s2" value="2" />
+                  <label for="s2">★</label>
+                  <input type="radio" name="rating" id="s1" value="1" />
+                  <label for="s1">★</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="t" data-key="likes_label"></label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like1" /><span class="t" data-key="like1"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like2" /><span class="t" data-key="like2"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like3" /><span class="t" data-key="like3"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like4" /><span class="t" data-key="like4"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like5" /><span class="t" data-key="like5"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like6" /><span class="t" data-key="like6"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like7" /><span class="t" data-key="like7"></span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="likes" class="like-cb" data-key="like8" /><span class="t" data-key="like8"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field" style="margin-bottom:0">
+              <label class="t" data-key="comment"></label>
+              <textarea name="comment" class="t-ph" data-key="ph_comment"></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="submit-wrap">
+          <button type="submit" id="btn"><span class="t" data-key="submit"></span></button>
+        </div>
+      </form>
+
+      <div class="success" id="success">
+        <span class="success-icon">◆</span>
+        <h2 class="t" data-key="success_title"></h2>
+        <p class="t" data-key="success_text"></p>
+      </div>
     </div>
 
-    <form id="form">
-
-      <!-- СЕКЦИЯ 1: Кто вы -->
-      <div class="section-title t" data-key="section1"></div>
-
-      <div class="field">
-        <label class="t" data-key="first_name"></label>
-        <input type="text" name="first_name" class="t-ph" data-key="ph_first_name" required />
-      </div>
-      <div class="field">
-        <label class="t" data-key="last_name"></label>
-        <input type="text" name="last_name" class="t-ph" data-key="ph_last_name" required />
-      </div>
-      <div class="field">
-        <label class="t" data-key="phone"></label>
-        <input type="tel" name="phone" placeholder="+998 90 123 45 67" required />
-      </div>
-      <div class="field">
-        <label class="t" data-key="visit_type"></label>
-        <div class="toggle-group">
-          <input type="radio" name="visit_type" id="first" value="" required />
-          <label for="first" class="t" data-key="first_visit"></label>
-          <input type="radio" name="visit_type" id="repeat" value="" />
-          <label for="repeat" class="t" data-key="repeat_visit"></label>
-        </div>
-      </div>
-      <div class="field">
-        <label class="t" data-key="source"></label>
-        <select name="source" required>
-          <option value="" disabled selected class="t" data-key="select_source"></option>
-          <option class="t" data-key="src1"></option>
-          <option class="t" data-key="src2"></option>
-          <option class="t" data-key="src3"></option>
-          <option class="t" data-key="src4"></option>
-          <option class="t" data-key="src5"></option>
-          <option class="t" data-key="src6"></option>
-        </select>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- СЕКЦИЯ 2: Сегодняшний визит -->
-      <div class="section-title t" data-key="section2"></div>
-
-      <div class="field">
-        <label class="t" data-key="service"></label>
-        <select name="service" required>
-          <option value="" disabled selected class="t" data-key="select_service"></option>
-          <option class="t" data-key="svc1"></option>
-          <option class="t" data-key="svc2"></option>
-          <option class="t" data-key="svc3"></option>
-          <option class="t" data-key="svc4"></option>
-          <option class="t" data-key="svc5"></option>
-          <option class="t" data-key="svc6"></option>
-        </select>
-      </div>
-      <div class="field">
-        <label class="t" data-key="master"></label>
-        <input type="text" name="master" class="t-ph" data-key="ph_master" required />
-      </div>
-      <div class="field">
-        <label class="t" data-key="fav_master"></label>
-        <input type="text" name="fav_master" class="t-ph" data-key="ph_fav_master" />
-      </div>
-      <div class="field">
-        <label class="t" data-key="amount"></label>
-        <input type="text" name="amount" class="t-ph" data-key="ph_amount" required />
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- СЕКЦИЯ 3: Обратная связь -->
-      <div class="section-title t" data-key="section3"></div>
-
-      <div class="field">
-        <label class="t" data-key="rating"></label>
-        <div class="stars">
-          <input type="radio" name="rating" id="s5" value="5" required />
-          <label for="s5">★</label>
-          <input type="radio" name="rating" id="s4" value="4" />
-          <label for="s4">★</label>
-          <input type="radio" name="rating" id="s3" value="3" />
-          <label for="s3">★</label>
-          <input type="radio" name="rating" id="s2" value="2" />
-          <label for="s2">★</label>
-          <input type="radio" name="rating" id="s1" value="1" />
-          <label for="s1">★</label>
-        </div>
-      </div>
-      <div class="field">
-        <label class="t" data-key="likes_label"></label>
-        <div class="checkbox-group" id="likes-group">
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like1" />
-            <span class="t" data-key="like1"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like2" />
-            <span class="t" data-key="like2"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like3" />
-            <span class="t" data-key="like3"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like4" />
-            <span class="t" data-key="like4"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like5" />
-            <span class="t" data-key="like5"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like6" />
-            <span class="t" data-key="like6"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like7" />
-            <span class="t" data-key="like7"></span>
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" name="likes" class="like-cb" data-key="like8" />
-            <span class="t" data-key="like8"></span>
-          </label>
-        </div>
-      </div>
-      <div class="field">
-        <label class="t" data-key="comment"></label>
-        <textarea name="comment" class="t-ph" data-key="ph_comment"></textarea>
-      </div>
-
-      <button type="submit" id="btn" class="t" data-key="submit"></button>
-    </form>
-
-    <div class="success" id="success">
-      <div class="icon">🌸</div>
-      <h2 class="t" data-key="success_title"></h2>
-      <p class="t" data-key="success_text"></p>
+    <div class="footer">
+      <p>Carbonado Beauty Studio © 2025</p>
     </div>
   </div>
 
   <script>
     const translations = {
       uz: {
-        subtitle: "Anketani to'ldiring — 2 daqiqa vaqt oladi",
-        section1: "Asosiy ma'lumotlar",
-        first_name: "Ism",
-        ph_first_name: "Munira",
-        last_name: "Familiya",
-        ph_last_name: "Ivanova",
-        phone: "Telefon raqam",
-        master: "Usta ismi",
-        ph_master: "Alina",
-        amount: "To'lov summasi",
-        ph_amount: "150 000",
-        section2: "Tashrif haqida",
-        service: "Qanday xizmat oldingiz?",
-        select_service: "Xizmatni tanlang",
-        svc1: "Manikur", svc2: "Pedikur", svc3: "Tirnoq o'stirish",
-        svc4: "Gel-lak qoplash", svc5: "Manikur + Pedikur", svc6: "Boshqa",
-        visit_type: "Bu sizning birinchi tashrifingizmi?",
-        first_visit: "Birinchi marta",
-        repeat_visit: "Qayta tashrif",
-        source: "Biz haqimizda qayerdan bildingiz?",
-        select_source: "Variantni tanlang",
+        subtitle: "Siz haqingizda bilishni xohlaymiz",
+        section1: "Shaxsiy ma'lumotlar",
+        first_name: "Ism", ph_first_name: "Ismingiz",
+        last_name: "Familiya", ph_last_name: "Familiyangiz",
+        phone: "Telefon",
+        visit_type: "Tashrif turi",
+        first_visit: "Birinchi marta", repeat_visit: "Qayta tashrif",
+        source: "Biz haqimizda qayerdan bildingiz",
         src1: "Instagram", src2: "Do'st / tanishlar", src3: "Google Maps",
         src4: "Telegram", src5: "Yaqindan o'tib", src6: "Boshqa",
-        fav_master: "Салонимизда қайси мастерларга келасиз?",
-        ph_fav_master: "Usta ismini yozing...",
+        section2: "Bugungi tashrif",
+        service: "Xizmat turi",
+        select_service: "Tanlang",
+        svc1: "Manikur", svc2: "Pedikur", svc3: "Tirnoq o'stirish",
+        svc4: "Gel-lak qoplash", svc5: "Manikur + Pedikur", svc6: "Boshqa",
+        master: "Bugungi usta", ph_master: "Usta ismi",
+        fav_master: "Салонимизда қайси мастерларга келасиз", ph_fav_master: "Usta ismi...",
+        amount: "To'lov summasi", ph_amount: "150 000 so'm",
         section3: "Fikr-mulohaza",
         rating: "Bahoyingiz",
-        satisfied: "Hamma narsa yoqdimi?",
-        yes: "👍 Ha", no: "👎 Yo'q",
-        likes_label: "Сизга салонда нималар ёқади? (bir nechtasini tanlash mumkin)",
+        likes_label: "Сизга салонда нималар ёқади",
         like1: "Салон атмосфераси",
         like2: "Мастерлар иши яхши ва сифатли",
         like3: "Нархлар қулай",
@@ -436,91 +689,78 @@
         like6: "Мастерлар муомаласи жуда яхши",
         like7: "Иссиқ кофе ва муздек ичимликлар бор",
         like8: "Салон доим тинч, бақир чақир йўқ",
-        comment: "Istak yoki izoh",
-        ph_comment: "Istaklar bo'lsa yozing...",
-        submit: "Anketani yuborish",
-        success_title: "Rahmat!",
-        success_text: "Anketangiz yuborildi.\nSizni yana ko'rishdan xursandmiz!",
+        comment: "Izoh yoki taklif", ph_comment: "Fikringizni yozing...",
+        submit: "Yuborish",
+        success_title: "Rahmat",
+        success_text: "Anketangiz qabul qilindi.\nSizni yana ko'rishdan xursandmiz.",
       },
       ru: {
-        subtitle: "Заполните анкету — это займёт 2 минуты",
-        section1: "Основная информация",
-        first_name: "Имя", ph_first_name: "Мунира",
-        last_name: "Фамилия", ph_last_name: "Иванова",
-        phone: "Номер телефона",
-        master: "Имя мастера", ph_master: "Алина",
-        amount: "Сумма оплаты", ph_amount: "150 000",
-        section2: "О вашем визите",
-        service: "Какую услугу получили?",
-        select_service: "Выберите услугу",
-        svc1: "Маникюр", svc2: "Педикюр", svc3: "Наращивание ногтей",
-        svc4: "Покрытие гель-лаком", svc5: "Маникюр + Педикюр", svc6: "Другое",
-        visit_type: "Это ваш первый визит?",
+        subtitle: "Нам важно знать о вас больше",
+        section1: "Личные данные",
+        first_name: "Имя", ph_first_name: "Ваше имя",
+        last_name: "Фамилия", ph_last_name: "Ваша фамилия",
+        phone: "Телефон",
+        visit_type: "Тип визита",
         first_visit: "Первый раз", repeat_visit: "Повторный",
-        source: "Откуда узнали о нас?",
-        select_source: "Выберите вариант",
+        source: "Как вы о нас узнали",
         src1: "Instagram", src2: "Подруга / знакомые", src3: "Google Карты",
-        src4: "Telegram", src5: "Проходил(а) мимо", src6: "Другое",
-        fav_master: "К каким мастерам вы приходите в нашем салоне?",
-        ph_fav_master: "Напишите имя мастера...",
+        src4: "Telegram", src5: "Проходила мимо", src6: "Другое",
+        section2: "Сегодняшний визит",
+        service: "Услуга",
+        svc1: "Маникюр", svc2: "Педикюр", svc3: "Наращивание ногтей",
+        svc4: "Гель-лак", svc5: "Маникюр + Педикюр", svc6: "Другое",
+        master: "Мастер сегодня", ph_master: "Имя мастера",
+        fav_master: "К каким мастерам вы обычно приходите", ph_fav_master: "Имя мастера...",
+        amount: "Сумма оплаты", ph_amount: "150 000 сум",
         section3: "Обратная связь",
         rating: "Ваша оценка",
-        satisfied: "Всё ли понравилось?",
-        yes: "👍 Да", no: "👎 Нет",
-        likes_label: "Что вам нравится в салоне? (можно выбрать несколько)",
+        likes_label: "Что вам нравится в нашем салоне",
         like1: "Атмосфера салона",
-        like2: "Работа мастеров качественная",
-        like3: "Цены доступные",
+        like2: "Качество работы мастеров",
+        like3: "Доступные цены",
         like4: "Удобное расположение",
-        like5: "Чистота и стерильность инструментов",
-        like6: "Отличное общение мастеров",
-        like7: "Есть горячий кофе и холодные напитки",
+        like5: "Чистота и стерильность",
+        like6: "Общение мастеров",
+        like7: "Горячий кофе и холодные напитки",
         like8: "Тихая спокойная обстановка",
-        comment: "Пожелания или комментарий",
-        ph_comment: "Напишите если есть пожелания...",
-        submit: "Отправить анкету",
-        success_title: "Спасибо!",
-        success_text: "Ваша анкета отправлена.\nРады видеть вас снова!",
+        comment: "Пожелания или комментарий", ph_comment: "Поделитесь вашими мыслями...",
+        submit: "Отправить",
+        success_title: "Благодарим",
+        success_text: "Ваша анкета принята.\nБудем рады видеть вас снова.",
       },
       en: {
-        subtitle: "Fill out the form — it takes 2 minutes",
-        section1: "Basic information",
-        first_name: "First name", ph_first_name: "Munira",
-        last_name: "Last name", ph_last_name: "Ivanova",
-        phone: "Phone number",
-        master: "Master's name", ph_master: "Alina",
-        amount: "Payment amount", ph_amount: "150 000",
-        section2: "About your visit",
-        service: "What service did you receive?",
-        select_service: "Choose a service",
+        subtitle: "We would love to know more about you",
+        section1: "Personal details",
+        first_name: "First name", ph_first_name: "Your first name",
+        last_name: "Last name", ph_last_name: "Your last name",
+        phone: "Phone",
+        visit_type: "Visit type",
+        first_visit: "First visit", repeat_visit: "Returning",
+        source: "How did you find us",
+        src1: "Instagram", src2: "Friend / referral", src3: "Google Maps",
+        src4: "Telegram", src5: "Walked by", src6: "Other",
+        section2: "Today's visit",
+        service: "Service",
         svc1: "Manicure", svc2: "Pedicure", svc3: "Nail extensions",
         svc4: "Gel polish", svc5: "Manicure + Pedicure", svc6: "Other",
-        visit_type: "Is this your first visit?",
-        first_visit: "First time", repeat_visit: "Returning",
-        source: "How did you find us?",
-        select_source: "Choose an option",
-        src1: "Instagram", src2: "Friend / acquaintance", src3: "Google Maps",
-        src4: "Telegram", src5: "Walked by", src6: "Other",
-        fav_master: "Which masters do you visit in our salon?",
-        ph_fav_master: "Write master's name...",
+        master: "Today's master", ph_master: "Master's name",
+        fav_master: "Which masters do you usually visit", ph_fav_master: "Master's name...",
+        amount: "Payment amount", ph_amount: "150 000",
         section3: "Feedback",
         rating: "Your rating",
-        satisfied: "Did you enjoy everything?",
-        yes: "👍 Yes", no: "👎 No",
-        likes_label: "What do you like about our salon? (choose multiple)",
+        likes_label: "What do you love about our salon",
         like1: "Salon atmosphere",
-        like2: "High quality work by masters",
+        like2: "Quality of masters' work",
         like3: "Affordable prices",
         like4: "Convenient location",
-        like5: "Always clean, sterile instruments",
-        like6: "Excellent communication from masters",
-        like7: "Hot coffee and cold drinks available",
-        like8: "Always calm and peaceful",
-        comment: "Suggestions or comment",
-        ph_comment: "Write if you have any suggestions...",
-        submit: "Submit form",
-        success_title: "Thank you!",
-        success_text: "Your form has been submitted.\nWe look forward to seeing you again!",
+        like5: "Cleanliness and sterility",
+        like6: "Masters' communication",
+        like7: "Hot coffee and cold drinks",
+        like8: "Calm and peaceful environment",
+        comment: "Suggestions or comments", ph_comment: "Share your thoughts...",
+        submit: "Submit",
+        success_title: "Thank you",
+        success_text: "Your response has been received.\nWe look forward to seeing you again.",
       }
     };
 
@@ -530,46 +770,35 @@
       currentLang = lang;
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       const t = translations[lang];
 
       document.querySelectorAll('.t').forEach(el => {
         const key = el.dataset.key;
         if (t[key] !== undefined) el.textContent = t[key];
       });
-
       document.querySelectorAll('.t-ph').forEach(el => {
         const key = el.dataset.key;
         if (t[key] !== undefined) el.placeholder = t[key];
       });
-
-      // Обновляем value чекбоксов
       document.querySelectorAll('.like-cb').forEach(cb => {
         const key = cb.dataset.key;
         if (t[key]) cb.value = t[key];
       });
-
       document.getElementById('first').value = t.first_visit;
       document.getElementById('repeat').value = t.repeat_visit;
-      document.getElementById('yes').value = t.yes.replace('👍 ', '');
-      document.getElementById('no').value = t.no.replace('👎 ', '');
     }
 
-    // Инициализация
     setLang('ru', document.querySelectorAll('.lang-btn')[1]);
 
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn');
       btn.disabled = true;
-      btn.textContent = currentLang === 'uz' ? 'Yuborilmoqda...' : currentLang === 'en' ? 'Sending...' : 'Отправляем...';
+      btn.querySelector('span').textContent = '...';
 
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
-
-      // Собираем все выбранные чекбоксы
-      const likes = formData.getAll('likes');
-      data.likes = likes.join(', ');
+      data.likes = formData.getAll('likes').join(', ');
       data.lang = currentLang.toUpperCase();
 
       try {
@@ -582,8 +811,8 @@
         document.getElementById('success').style.display = 'block';
       } catch {
         btn.disabled = false;
-        btn.textContent = translations[currentLang].submit;
-        alert(currentLang === 'uz' ? "Xatolik. Qayta urinib ko'ring." : currentLang === 'en' ? 'Error. Please try again.' : 'Ошибка. Попробуйте ещё раз.');
+        btn.querySelector('span').textContent = translations[currentLang].submit;
+        alert('Error. Please try again.');
       }
     });
   </script>
