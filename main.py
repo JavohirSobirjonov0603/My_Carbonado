@@ -29,7 +29,7 @@ class VisitForm(BaseModel):
     visit_type: str
     source: str
     rating: str
-    satisfied: str
+    satisfied: Optional[str] = ""
     comment: Optional[str] = ""
     fav_master: Optional[str] = ""
     likes: Optional[str] = ""
@@ -62,7 +62,7 @@ async def submit_form(form: VisitForm):
         f"{fav_master_line}\n"
         f"━━━━━━━━━━━━━━━\n"
         f"{stars} Оценка: {form.rating}/5\n"
-        f"😊 Доволен(а): {form.satisfied}"
+        f""
         f"{likes_line}"
         f"{comment_line}"
     )
