@@ -256,6 +256,7 @@
 
     <form id="form">
 
+      <!-- СЕКЦИЯ 1: Кто вы -->
       <div class="section-title t" data-key="section1"></div>
 
       <div class="field">
@@ -271,15 +272,30 @@
         <input type="tel" name="phone" placeholder="+998 90 123 45 67" required />
       </div>
       <div class="field">
-        <label class="t" data-key="master"></label>
-        <input type="text" name="master" class="t-ph" data-key="ph_master" required />
+        <label class="t" data-key="visit_type"></label>
+        <div class="toggle-group">
+          <input type="radio" name="visit_type" id="first" value="" required />
+          <label for="first" class="t" data-key="first_visit"></label>
+          <input type="radio" name="visit_type" id="repeat" value="" />
+          <label for="repeat" class="t" data-key="repeat_visit"></label>
+        </div>
       </div>
       <div class="field">
-        <label class="t" data-key="amount"></label>
-        <input type="text" name="amount" class="t-ph" data-key="ph_amount" required />
+        <label class="t" data-key="source"></label>
+        <select name="source" required>
+          <option value="" disabled selected class="t" data-key="select_source"></option>
+          <option class="t" data-key="src1"></option>
+          <option class="t" data-key="src2"></option>
+          <option class="t" data-key="src3"></option>
+          <option class="t" data-key="src4"></option>
+          <option class="t" data-key="src5"></option>
+          <option class="t" data-key="src6"></option>
+        </select>
       </div>
 
       <div class="divider"></div>
+
+      <!-- СЕКЦИЯ 2: Сегодняшний визит -->
       <div class="section-title t" data-key="section2"></div>
 
       <div class="field">
@@ -294,37 +310,22 @@
           <option class="t" data-key="svc6"></option>
         </select>
       </div>
-
       <div class="field">
-        <label class="t" data-key="visit_type"></label>
-        <div class="toggle-group">
-          <input type="radio" name="visit_type" id="first" value="" required />
-          <label for="first" class="t" data-key="first_visit"></label>
-          <input type="radio" name="visit_type" id="repeat" value="" />
-          <label for="repeat" class="t" data-key="repeat_visit"></label>
-        </div>
+        <label class="t" data-key="master"></label>
+        <input type="text" name="master" class="t-ph" data-key="ph_master" required />
       </div>
-
-      <div class="field">
-        <label class="t" data-key="source"></label>
-        <select name="source" required>
-          <option value="" disabled selected class="t" data-key="select_source"></option>
-          <option class="t" data-key="src1"></option>
-          <option class="t" data-key="src2"></option>
-          <option class="t" data-key="src3"></option>
-          <option class="t" data-key="src4"></option>
-          <option class="t" data-key="src5"></option>
-          <option class="t" data-key="src6"></option>
-        </select>
-      </div>
-
-      <!-- НОВЫЙ ВОПРОС 1: Какой мастер -->
       <div class="field">
         <label class="t" data-key="fav_master"></label>
         <input type="text" name="fav_master" class="t-ph" data-key="ph_fav_master" />
       </div>
+      <div class="field">
+        <label class="t" data-key="amount"></label>
+        <input type="text" name="amount" class="t-ph" data-key="ph_amount" required />
+      </div>
 
       <div class="divider"></div>
+
+      <!-- СЕКЦИЯ 3: Обратная связь -->
       <div class="section-title t" data-key="section3"></div>
 
       <div class="field">
@@ -342,7 +343,6 @@
           <label for="s1">★</label>
         </div>
       </div>
-
       <div class="field">
         <label class="t" data-key="satisfied"></label>
         <div class="toggle-group">
@@ -352,8 +352,6 @@
           <label for="no" class="t" data-key="no"></label>
         </div>
       </div>
-
-      <!-- НОВЫЙ ВОПРОС 2: Что нравится -->
       <div class="field">
         <label class="t" data-key="likes_label"></label>
         <div class="checkbox-group" id="likes-group">
@@ -391,7 +389,6 @@
           </label>
         </div>
       </div>
-
       <div class="field">
         <label class="t" data-key="comment"></label>
         <textarea name="comment" class="t-ph" data-key="ph_comment"></textarea>
