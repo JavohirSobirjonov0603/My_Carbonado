@@ -10,18 +10,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #C4847A;
-      --gold-light: #E8C4BE;
-      --gold-dark: #9A5C55;
-      --dark: #120A0B;
-      --dark-2: #1A0F10;
-      --dark-3: #221418;
-      --dark-4: #2E1C20;
-      --text: #F5EDE8;
-      --text-muted: #9A8078;
-      --text-dim: #6A4E50;
-      --border: rgba(196, 132, 122, 0.18);
-      --border-hover: rgba(196, 132, 122, 0.45);
+      --gold: #A0627A;
+      --gold-light: #C4899A;
+      --gold-dark: #7A4560;
+      --dark: #FDF8F6;
+      --dark-2: #FFFFFF;
+      --dark-3: #F5EEF0;
+      --dark-4: #EDE0E4;
+      --text: #3A2030;
+      --text-muted: #8A6070;
+      --text-dim: #C0A0AA;
+      --border: rgba(160, 98, 122, 0.15);
+      --border-hover: rgba(160, 98, 122, 0.4);
     }
 
     html { scroll-behavior: smooth; }
@@ -30,8 +30,8 @@
       min-height: 100vh;
       background: var(--dark);
       background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(196,132,122,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(150,80,80,0.05) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 50%, rgba(160,98,122,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(196,160,170,0.06) 0%, transparent 50%);
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -150,7 +150,7 @@
 
     .lang-btn:not(.active):hover {
       color: var(--gold);
-      background: rgba(196,132,122,0.05);
+      background: rgba(160,98,122,0.05);
     }
 
     /* Карточка формы */
@@ -246,7 +246,7 @@
     .field select {
       cursor: pointer;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C4847A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23A0627A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 4px center;
     }
@@ -288,7 +288,7 @@
     .toggle-row label:last-child { border-right: none; }
 
     .toggle-row input:checked + label {
-      background: rgba(196,132,122,0.1);
+      background: rgba(160,98,122,0.1);
       color: var(--gold);
     }
 
@@ -306,7 +306,7 @@
 
     .stars label {
       font-size: 28px;
-      color: #5A3038;
+      color: #DEC8CE;
       cursor: pointer;
       transition: color 0.2s, transform 0.15s;
       margin: 0;
@@ -343,7 +343,7 @@
     }
 
     .checkbox-item:last-child { border-bottom: none; }
-    .checkbox-item:hover { background: rgba(196,132,122,0.04); }
+    .checkbox-item:hover { background: rgba(160,98,122,0.04); }
 
     .checkbox-item input[type="checkbox"] {
       width: 14px;
@@ -364,7 +364,7 @@
     }
 
     .checkbox-item:has(input:checked) {
-      background: rgba(196,132,122,0.06);
+      background: rgba(160,98,122,0.06);
     }
 
     .checkbox-item:has(input:checked) span {
@@ -411,7 +411,7 @@
     }
 
     button[type="submit"]:hover::before { transform: translateX(0); }
-    button[type="submit"]:hover span { color: var(--dark); }
+    button[type="submit"]:hover span { color: #FFFFFF; }
     button[type="submit"]:disabled { opacity: 0.4; cursor: not-allowed; }
     button[type="submit"]:disabled::before { display: none; }
 
