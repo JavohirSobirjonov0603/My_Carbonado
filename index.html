@@ -340,6 +340,9 @@
       cursor: pointer;
       transition: background 0.2s;
       border-bottom: 1px solid var(--border);
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 14px;
     }
 
     .checkbox-item:last-child { border-bottom: none; }
@@ -357,10 +360,12 @@
     }
 
     .checkbox-item span {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-muted);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.4;
+      text-transform: none;
+      letter-spacing: 0;
     }
 
     .checkbox-item:has(input:checked) {
